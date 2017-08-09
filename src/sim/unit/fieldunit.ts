@@ -17,7 +17,7 @@ export abstract class BaseUnit implements Unit {
   protected _allowableJobs: Array<Job>;
   protected _jobPoints: Map<Job, Integer>;
 
-  constructor(name: string,
+  initialize (name: string,
               zodiac: Zodiac,
               gender: Gender,
               level: Integer,
@@ -29,7 +29,7 @@ export abstract class BaseUnit implements Unit {
               mAttack: Integer,
               activeJob: Job,
               allowableJobs: Array<Job>,
-              jobPoints: Map<Job, Integer>) {
+              jobPoints: Map<Job, Integer>): void {
     this._name = name;
     this._zodiac = zodiac;
     this._gender = gender;
@@ -43,6 +43,7 @@ export abstract class BaseUnit implements Unit {
     this._activeJob = activeJob;
     this._allowableJobs = allowableJobs;
     this._jobPoints = jobPoints;
+    return;
   }
 
   abstract builderFrom<T extends BaseUnit>(unit: T): Builder<T>;
@@ -155,9 +156,31 @@ export class Builder<T extends BaseUnit> {
     this._jobPoints = jobPoints;
     return this;
   }
+
+  build<T>(c: new() => T): T {
+    T asdf = new c();
+    asdf.initialize(_name,
+                    _zodiac,
+                    _gender,
+                    _level,
+                    _brave,
+                    _faith,
+                    _maxHp,
+                    _maxMp,
+                    _pAttack,
+                    _mAttack,
+                    _activeJob,
+                    _allowableJobs,
+                    _jobPoints);
+    return asdf;
+  }
 }
 
 export class GenericUnit extends BaseUnit {
+  static builder(): Builder<GenericUnit> {
+    return new Builder<GenericUnit>();
+  }
+
   builderFrom(unit: GenericUnit): Builder<GenericUnit> {
     return new Builder<GenericUnit>();
   }
