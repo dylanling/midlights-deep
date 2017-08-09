@@ -1,26 +1,7 @@
 import {Stats} from '../unit/unit';
 import {Integer} from '../math/integer';
 
-// export type Weapon = Knife
-//   | NinjaBlade
-//   | Sword
-//   | KnightSword
-//   | Katana
-//   | Axe
-//   | Rod
-//   | Staff
-//   | Flail
-//   | Gun
-//   | MagickGun
-//   | Crossbow
-//   | Bow
-//   | Instrument
-//   | Book
-//   | Polearm
-//   | Pole
-//   | Bag
-//   | Cloth
-//   | FellSword;
+export type Wieldable = Weapon | Shield;
 
 export abstract class Weapon {
   readonly power: Integer;
@@ -34,9 +15,9 @@ export abstract class Weapon {
   abstract readonly vRangeDown: Integer;
   abstract readonly damage: (stats: Stats) => Integer;
 
-  constructor(power: Integer, evadePercent: Integer) {
-    this.power = power;
-    this.evadePercent = evadePercent;
+  constructor(power: number, evadePercent: number) {
+    this.power = Integer.from(power);
+    this.evadePercent = Integer.from(evadePercent);
   }
 }
 
@@ -141,3 +122,13 @@ export class Sword extends Weapon {
 // export class FellSword extends Weapon {
 
 // }
+
+export class Shield {
+  readonly pEvadePercent: Integer;
+  readonly mEvadePercent: Integer;
+  // readonly special: ??
+  constructor(pEvadePercent: number, mEvadePercent: number) {
+    this.pEvadePercent = Integer.from(pEvadePercent);
+    this.mEvadePercent = Integer.from(mEvadePercent);
+  }
+}

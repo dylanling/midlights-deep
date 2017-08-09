@@ -11,7 +11,7 @@ export class Unit {
   readonly abilities: Abilities;
   readonly equipment: Equipment;
 
-  constructor(name: String,
+  constructor(name: string,
               zodiac: Zodiac,
               gender: Gender,
               stats: Stats,
@@ -26,7 +26,7 @@ export class Unit {
     this.abilities = abilities;
     this.equipment = equipment;
   }
-  withName = (name: String): Unit =>
+  withName = (name: string): Unit =>
     new Unit(name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
   withZodiac = (zodiac: Zodiac): Unit =>
     new Unit(this.name, zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
