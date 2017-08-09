@@ -1,41 +1,44 @@
-export interface Ability {
-  name(): string;
-  description(): string;
+export type Ability = ActionAbility 
+  | ReactionAbility
+  | SupportAbility
+  | MovementAbility;
+
+export interface ActionAbility {
+
 }
 
-export abstract class ActionAbility implements Ability {
-  abstract name(): string;
-  abstract description(): string;
-  // range?
-  // success calculation?
+export interface ReactionAbility {
+
 }
 
-export abstract class ReactionAbility implements Ability {
-  abstract name(): string;
-  abstract description(): string;
-  // success calculation?
+export interface SupportAbility {
+
 }
 
-export abstract class SupportAbility implements Ability {
-  abstract name(): string;
-  abstract description(): string;
+export interface MovementAbility {
+
 }
 
-export abstract class MovementAbility implements Ability {
-  abstract name(): string;
-  abstract description(): string;
-  // modified range?
-}
+export class AbilitySet {
+  readonly actionAbilities: Array<ActionAbility>;
+  readonly reactionAbilities: Array<ReactionAbility>;
+  readonly supportAbilities: Array<SupportAbility>;
+  readonly movementAbilities: Array<MovementAbility>;
 
-export abstract class AbilitySet {
-  abstract actionAbilities(): Array<ActionAbility>;
-  abstract reactionAbilities(): Array<ReactionAbility>;
-  abstract supportAbilities(): Array<SupportAbility>;
-  abstract movementAbilities(): Array<MovementAbility>;
+  constructor(actionAbilities: Array<ActionAbility>,
+              reactionAbilities: Array<ReactionAbility>,
+              supportAbilities: Array<SupportAbility>,
+              movementAbilities: Array<MovementAbility>) {
+    this.actionAbilities = actionAbilities;
+    this.reactionAbilities = reactionAbilities;
+    this.supportAbilities = supportAbilities;
+    this.movementAbilities = movementAbilities;
+  }
 
-  abilities = (): Array<Ability> =>
-    this.actionAbilities()
-      .concat(this.reactionAbilities())
-      .concat(this.supportAbilities())
-      .concat(this.movementAbilities());
+  get abilities(): Array<Ability> {
+    return this.actionAbilities
+      .concat(this.reactionAbilities)
+      .concat(this.supportAbilities)
+      .concat(this.movementAbilities);
+  }
 }

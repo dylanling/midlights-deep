@@ -2,30 +2,27 @@ import {AbilitySet} from '../ability/ability';
 import {Status} from '../battle/status';
 import {Integer} from '../math/integer';
 
-export interface Job {
-  name(): string;
-  abilitySet(): AbilitySet;
-  type(): JobType;
+export class Job {
+  abilitySet: AbilitySet;
+  type: JobType;
 
-  hpMultiplier(): Integer;
-  mpMultiplier(): Integer;
-  speedMultiplier(): Integer;
-  pAttackMultiplier(): Integer;
-  mAttackMultiplier(): Integer;
+  hpMultiplier: Integer;
+  mpMultiplier: Integer;
+  speedMultiplier: Integer;
+  pAttackMultiplier: Integer;
+  mAttackMultiplier: Integer;
 
-  hpLevelUpIncrement(): Integer;
-  mpLevelUpIncrement(): Integer;
-  speedLevelUpIncrement(): Integer;
-  pAttackLevelUpIncrement(): Integer;
-  mAttackLevelUpIncrement(): Integer;
+  hpLevelUpIncrement: Integer;
+  mpLevelUpIncrement: Integer;
+  speedLevelUpIncrement: Integer;
+  pAttackLevelUpIncrement: Integer;
+  mAttackLevelUpIncrement: Integer;
 
-  move(): Integer;
-  jump(): Integer;
-  pEvadePercent(): Integer;
+  move: Integer;
+  jump: Integer;
+  pEvadePercent: Integer;
 
-  immunities(): Array<Status>;
-  jobRequirements(): Map<Job, Integer>;
-
+  immunities: Array<Status>;
   // TODO: equippable stuffs
 
   // TODO: sprite
