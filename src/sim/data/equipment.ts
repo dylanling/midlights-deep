@@ -2,8 +2,8 @@ import * as Wieldable from '../item/wieldable';
 import * as Headgear from '../item/headgear';
 
 ////
- // WEAPONS
- ////
+// WEAPONS
+////
 
 // Swords
 export const Nagnarok = new Wieldable.Sword(1, 50);
@@ -22,8 +22,8 @@ export const Icebrand = new Wieldable.Sword(13, 10);
 export const Runeblade = new Wieldable.Sword(14, 15);
 
 ////
- // HEADGEAR
- ////
+// HEADGEAR
+////
  
 // Helms
 export const LeatherHelm = new Headgear.Helm(10, 0);
