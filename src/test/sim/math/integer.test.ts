@@ -1,4 +1,4 @@
-import Integer from '../../../sim/math/integer';
+import {Integer} from '../../../sim/math/integer';
 
 it('adds numbers correctly', () => {
   const a = Integer.random(Integer.MIN, Integer.MAX);

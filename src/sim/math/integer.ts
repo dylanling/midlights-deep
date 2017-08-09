@@ -1,4 +1,4 @@
-export default class Integer {
+export class Integer {
   private _value: number;
 
   private constructor(value: number) {
