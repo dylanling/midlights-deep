@@ -1,7 +1,7 @@
 import {Stats} from '../unit/unit';
 import {Integer} from '../math/integer';
 
-export type Wieldable = Weapon | Shield;
+export type Wieldable = Weapon | Shield | undefined;
 
 export abstract class Weapon {
   readonly power: Integer;
@@ -134,7 +134,7 @@ export class Shield {
 }
 
 export function isWeapon(item: Wieldable): boolean {
-  return (<Weapon>item).power !== undefined;
+  return item ? (item as Weapon).power !== undefined : false;
 }
 
 export const FISTS: Fists = new Fists(0, 0);

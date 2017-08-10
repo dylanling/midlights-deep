@@ -14,6 +14,7 @@ export class Unit {
   readonly job: Job;
   readonly abilities: UnitAbilities;
   readonly equipment: UnitEquipment;
+  readonly direction: Direction;
 
   constructor(name: string,
               zodiac: Zodiac,
@@ -21,7 +22,8 @@ export class Unit {
               stats: Stats,
               job: Job,
               abilities: UnitAbilities,
-              equipment: UnitEquipment) {
+              equipment: UnitEquipment,
+              direction: Direction) {
     this.name = name;
     this.zodiac = zodiac;
     this.gender = gender;
@@ -29,28 +31,40 @@ export class Unit {
     this.job = job;
     this.abilities = abilities;
     this.equipment = equipment;
+    this.direction = direction;
   }
 
   withName (name: string): Unit {
-    return new Unit(name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
+    return new Unit(
+      name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment, this.direction);
   }
   withZodiac(zodiac: Zodiac): Unit {
-    return new Unit(this.name, zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
+    return new Unit(
+      this.name, zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment, this.direction);
   }
   withGender(gender: Gender): Unit {
-    return new Unit(this.name, this.zodiac, gender, this.stats, this.job, this.abilities, this.equipment);
+    return new Unit(
+      this.name, this.zodiac, gender, this.stats, this.job, this.abilities, this.equipment, this.direction);
   }
   withStats(stats: Stats): Unit {
-    return new Unit(this.name, this.zodiac, this.gender, stats, this.job, this.abilities, this.equipment);
+    return new Unit(
+      this.name, this.zodiac, this.gender, stats, this.job, this.abilities, this.equipment, this.direction);
   }
   withJob(job: Job): Unit {
-    return new Unit(this.name, this.zodiac, this.gender, this.stats, job, this.abilities, this.equipment);
+    return new Unit(
+      this.name, this.zodiac, this.gender, this.stats, job, this.abilities, this.equipment, this.direction);
   }
   withAbilities(abilities: UnitAbilities): Unit {
-    return new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, abilities, this.equipment);
+    return new Unit(
+      this.name, this.zodiac, this.gender, this.stats, this.job, abilities, this.equipment, this.direction);
   }
   withEquipment(equipment: UnitEquipment): Unit {
-    return new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, this.abilities, equipment);
+    return new Unit(
+      this.name, this.zodiac, this.gender, this.stats, this.job, this.abilities, equipment, this.direction);
+  }
+  withDirection(direction: Direction): Unit {
+    return new Unit(
+      this.name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment, direction);
   }
 }
 
@@ -92,9 +106,9 @@ export class UnitEquipment {
 
   get weapon(): Weapon {
     return isWeapon(this.rightHand)
-      ? <Weapon>this.rightHand
+      ? this.rightHand as Weapon
       : isWeapon(this.leftHand)
-        ? <Weapon>this.leftHand
+        ? this.leftHand as Weapon
         : FISTS;
   }
 }
@@ -124,7 +138,7 @@ export class UnitAbilities {
 
   get actions(): Array<Abilities.ActionAbility> {
     return this.primarySet.actionAbilities
-      .concat(this.secondarySet.actionAbilities);
+      .concat(this.secondarySet ? this.secondarySet.actionAbilities : []);
   }
 
   withJob(job: Job): UnitAbilities {
@@ -164,4 +178,11 @@ export enum Gender {
   MALE,
   FEMALE,
   MONSTER
+}
+
+export enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST
 }
