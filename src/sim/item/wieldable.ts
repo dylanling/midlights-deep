@@ -132,3 +132,9 @@ export class Shield {
     this.mEvadePercent = Integer.from(mEvadePercent);
   }
 }
+
+export function isWeapon(item: Wieldable): boolean {
+  return (<Weapon>item).power !== undefined;
+}
+
+export const FISTS: Fists = new Fists(0, 0);

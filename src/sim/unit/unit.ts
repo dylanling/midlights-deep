@@ -1,5 +1,9 @@
 import {Job} from '../job/job';
-import {ActionAbility, ReactionAbility, SupportAbility, MovementAbility, AbilitySet} from '../ability/ability';
+import {Wieldable, Weapon, FISTS, isWeapon} from '../item/wieldable';
+import {Headgear} from '../item/headgear';
+import {BodyArmor} from '../item/bodyarmor';
+import {Accessory} from '../item/accessory';
+import * as Abilities from '../ability/ability';
 import {Integer} from '../math/integer';
 
 export class Unit {
@@ -8,16 +12,16 @@ export class Unit {
   readonly gender: Gender;
   readonly stats: Stats;
   readonly job: Job;
-  readonly abilities: Abilities;
-  readonly equipment: Equipment;
+  readonly abilities: UnitAbilities;
+  readonly equipment: UnitEquipment;
 
   constructor(name: string,
               zodiac: Zodiac,
               gender: Gender,
               stats: Stats,
               job: Job,
-              abilities: Abilities,
-              equipment: Equipment) {
+              abilities: UnitAbilities,
+              equipment: UnitEquipment) {
     this.name = name;
     this.zodiac = zodiac;
     this.gender = gender;
@@ -26,20 +30,28 @@ export class Unit {
     this.abilities = abilities;
     this.equipment = equipment;
   }
-  withName = (name: string): Unit =>
-    new Unit(name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
-  withZodiac = (zodiac: Zodiac): Unit =>
-    new Unit(this.name, zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
-  withGender = (gender: Gender): Unit =>
-    new Unit(this.name, this.zodiac, gender, this.stats, this.job, this.abilities, this.equipment);
-  withStats = (stats: Stats): Unit =>
-    new Unit(this.name, this.zodiac, this.gender, stats, this.job, this.abilities, this.equipment);
-  withJob = (job: Job): Unit =>
-    new Unit(this.name, this.zodiac, this.gender, this.stats, job, this.abilities, this.equipment);
-  withAbilities = (abilities: Abilities): Unit =>
-    new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, abilities, this.equipment);
-  withEquipment = (equipment: Equipment): Unit =>
-    new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, this.abilities, equipment);
+
+  withName (name: string): Unit {
+    return new Unit(name, this.zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
+  }
+  withZodiac(zodiac: Zodiac): Unit {
+    return new Unit(this.name, zodiac, this.gender, this.stats, this.job, this.abilities, this.equipment);
+  }
+  withGender(gender: Gender): Unit {
+    return new Unit(this.name, this.zodiac, gender, this.stats, this.job, this.abilities, this.equipment);
+  }
+  withStats(stats: Stats): Unit {
+    return new Unit(this.name, this.zodiac, this.gender, stats, this.job, this.abilities, this.equipment);
+  }
+  withJob(job: Job): Unit {
+    return new Unit(this.name, this.zodiac, this.gender, this.stats, job, this.abilities, this.equipment);
+  }
+  withAbilities(abilities: UnitAbilities): Unit {
+    return new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, abilities, this.equipment);
+  }
+  withEquipment(equipment: UnitEquipment): Unit {
+    return new Unit(this.name, this.zodiac, this.gender, this.stats, this.job, this.abilities, equipment);
+  }
 }
 
 export class Stats {
@@ -59,22 +71,46 @@ export class Stats {
   // TODO: constructor
 }
 
-export class Equipment {
-  
+export class UnitEquipment {
+  readonly rightHand?: Wieldable;
+  readonly leftHand?: Wieldable;
+  readonly headgear?: Headgear;
+  readonly armor?: BodyArmor;
+  readonly accessory?: Accessory;
+
+  constructor(rightHand?: Wieldable,
+              leftHand?: Wieldable,
+              headgear?: Headgear,
+              armor?: BodyArmor,
+              accessory?: Accessory) {
+    this.rightHand = rightHand;
+    this.leftHand = leftHand;
+    this.headgear = headgear;
+    this.armor = armor;
+    this.accessory = accessory;
+  }
+
+  get weapon(): Weapon {
+    return isWeapon(this.rightHand)
+      ? <Weapon>this.rightHand
+      : isWeapon(this.leftHand)
+        ? <Weapon>this.leftHand
+        : FISTS;
+  }
 }
 
-export class Abilities {
+export class UnitAbilities {
   readonly job: Job;
-  readonly secondarySet?: AbilitySet;
-  readonly reaction?: ReactionAbility;
-  readonly support?: SupportAbility;
-  readonly movement?: MovementAbility;
+  readonly secondarySet?: Abilities.AbilitySet;
+  readonly reaction?: Abilities.ReactionAbility;
+  readonly support?: Abilities.SupportAbility;
+  readonly movement?: Abilities.MovementAbility;
 
   constructor(job: Job, 
-              actions: AbilitySet, 
-              reaction: ReactionAbility, 
-              support: SupportAbility, 
-              movement: MovementAbility) {
+              actions?: Abilities.AbilitySet, 
+              reaction?: Abilities.ReactionAbility, 
+              support?: Abilities.SupportAbility, 
+              movement?: Abilities.MovementAbility) {
     this.job = job;
     this.secondarySet = actions;
     this.reaction = reaction;
@@ -82,25 +118,30 @@ export class Abilities {
     this.movement = movement;
   }
 
-  get primarySet(): AbilitySet {
+  get primarySet(): Abilities.AbilitySet {
     return this.job.abilitySet;
   }
 
-  get actions(): Array<ActionAbility> {
+  get actions(): Array<Abilities.ActionAbility> {
     return this.primarySet.actionAbilities
       .concat(this.secondarySet.actionAbilities);
   }
 
-  withJob = (job: Job): Abilities =>
-    new Abilities(job, this.secondarySet, this.reaction, this.support, this.movement);
-  withActions = (secondarySet: AbilitySet): Abilities =>
-    new Abilities(this.job, secondarySet, this.reaction, this.support, this.movement);
-  withReaction = (reaction: ReactionAbility): Abilities =>
-    new Abilities(this.job, this.secondarySet, reaction, this.support, this.movement);
-  withSupport = (support: SupportAbility): Abilities =>
-    new Abilities(this.job, this.secondarySet, this.reaction, support, this.movement);
-  withMovement = (movement: MovementAbility): Abilities =>
-    new Abilities(this.job, this.secondarySet, this.reaction, this.support, movement);
+  withJob(job: Job): UnitAbilities {
+    return new UnitAbilities(job, this.secondarySet, this.reaction, this.support, this.movement);
+  }
+  withActions(secondarySet: Abilities.AbilitySet): UnitAbilities {
+    return new UnitAbilities(this.job, secondarySet, this.reaction, this.support, this.movement);
+  }
+  withReaction(reaction: Abilities.ReactionAbility): UnitAbilities {
+    return new UnitAbilities(this.job, this.secondarySet, reaction, this.support, this.movement);
+  }
+  withSupport(support: Abilities.SupportAbility): UnitAbilities {
+    return new UnitAbilities(this.job, this.secondarySet, this.reaction, support, this.movement);
+  }
+  withMovement(movement: Abilities.MovementAbility): UnitAbilities {
+    return new UnitAbilities(this.job, this.secondarySet, this.reaction, this.support, movement);
+  }
 }
 
 export enum Zodiac {
