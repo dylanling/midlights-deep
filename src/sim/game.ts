@@ -1,6 +1,6 @@
 import {GameState} from './battle/gamestate';
-import {Event} from './event/event';
-import {EventQueue} from './event/eventqueue';
+import {BattleEvent} from './battle/event';
+import {EventQueue} from './battle/eventqueue';
 
 class Game {
   // display gamestate
@@ -17,7 +17,7 @@ class Game {
   }
 
   // TODO: store history
-  update(event: Event): GameState {
+  update(event: BattleEvent): GameState {
     this.events.push(event);
     return this.events.process();
   }

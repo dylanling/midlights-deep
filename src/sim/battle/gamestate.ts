@@ -1,28 +1,29 @@
 import {Tile} from '../map/map';
 import {Unit} from '../unit/unit';
+import {Integer} from '../math/integer';
 
 export class GameState {
-  readonly tiles: Map<[number, number], Tile>
-  readonly units: Map<[number, number], Unit>
+  readonly tiles: Map<[Integer, Integer], Tile>
+  readonly units: Map<[Integer, Integer], Unit>
 
-  constructor(tiles: Map<[number, number], Tile>, units: Map<[number, number], Unit>) {
+  constructor(tiles: Map<[Integer, Integer], Tile>, units: Map<[Integer, Integer], Unit>) {
     this.tiles = tiles;
     this.units = units;
   }
 
-  withUnitAt(location: [number, number], unit: Unit): GameState {
+  withUnitAt(location: [Integer, Integer], unit: Unit): GameState {
     let copy = new Map(this.units);
     copy.set(location, unit);
     return this.tiles.has(location) ? new GameState(this.tiles, copy) : this;
   }
 
-  withoutUnitAt(location: [number, number]): GameState {
+  withoutUnitAt(location: [Integer, Integer]): GameState {
     let copy = new Map(this.units);
     copy.delete(location);
     return new GameState(this.tiles, copy);
   }
 
-  withUnitMoved(oldLocation: [number, number], newLocation: [number, number]): GameState {
+  withUnitMoved(oldLocation: [Integer, Integer], newLocation: [Integer, Integer]): GameState {
     let copy = new Map(this.units);
     let unit = copy.get(oldLocation);
     if (unit && this.tiles.has(newLocation)) {
@@ -30,5 +31,9 @@ export class GameState {
       copy.set(newLocation, unit);
     }
     return new GameState(this.tiles, copy);
+  }
+
+  distanceBetween(a: [Integer, Integer], b: [Integer, Integer]): Integer {
+    return Integer.abs(a[0].minus(b[0])).plus(a[1].minus(b[1]));
   }
 }

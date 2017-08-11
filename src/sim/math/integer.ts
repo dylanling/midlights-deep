@@ -47,6 +47,9 @@ export class Integer {
   static random = (min: Integer, max: Integer): Integer =>
     Integer.from(Math.floor(Math.random() * (max.value - min.value + 1)) + min.value);
 
+  static abs = (a: Integer): Integer =>
+    Integer.from(Math.abs(a.value));
+
   static readonly MIN = Integer.from(-9999);
   static readonly MAX = Integer.from(9999);
 }
