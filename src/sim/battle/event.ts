@@ -2,12 +2,14 @@ import {EventProcessor, MovementEventProcessor} from './eventprocessor';
 import {Unit} from '../unit/unit';
 import {Integer} from '../math/integer';
 
+// processor constants
+const movementProcessor: EventProcessor<MovementEvent> = new MovementEventProcessor();
+
 export interface BattleEvent {
   processor(): EventProcessor<BattleEvent>;
 }
 
 export class MovementEvent implements BattleEvent {
-  static readonly processor: EventProcessor<MovementEvent> = new MovementEventProcessor();
   // readonly unit: Unit;
   readonly oldLocation: [Integer, Integer];
   readonly newLocation: [Integer, Integer];
@@ -18,7 +20,7 @@ export class MovementEvent implements BattleEvent {
   }
 
   processor() {
-    return MovementEvent.processor;
+    return movementProcessor;
   }
 }
 
