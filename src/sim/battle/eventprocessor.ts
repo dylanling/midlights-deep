@@ -1,4 +1,4 @@
-import {BattleEvent, MovementEvent, AttackEvent} from './event';
+import {BattleEvent, MovementEvent} from './event';
 import {GameState} from './gamestate';
 
 export interface EventProcessor<T extends BattleEvent> {

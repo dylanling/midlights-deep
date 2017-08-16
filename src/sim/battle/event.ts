@@ -1,5 +1,5 @@
 import {EventProcessor, MovementEventProcessor} from './eventprocessor';
-import {Unit} from '../unit/unit';
+//import {Unit} from '../unit/unit';
 import {Integer} from '../math/integer';
 
 // processor constants

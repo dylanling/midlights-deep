@@ -2,18 +2,18 @@ import * as React from 'react';
 import './Game.css';
 import * as Unit from './sim/unit/unit';
 import {GameState} from './sim/battle/gamestate';
-import {Tile} from './sim/map/map';
+//import {Tile} from './sim/map/map';
 import {TEST_MAP} from './sim/data/maps';
 import * as Jobs from './sim/data/jobs';
-import {MovementEvent} from './sim/battle/event';
+//import {MovementEvent} from './sim/battle/event';
 import {Integer} from './sim/math/integer';
 
 
-function Tile(props: any) {
-  const unit: Unit = props.unit;
+function BattleTile(props: any) {
+  const unit: Unit.Unit = props.unit;
   return (
     <button className="tile">
-      {unit.name}
+      {unit ? unit.name : ""}
     </button>
   );
 }
@@ -25,12 +25,12 @@ function BattleMap(props: any) {
       {
         range(0, gamestate.height)
           .map(y => (
-            <div>
+            <div className="battle-map-row">
               {
                 range(0, gamestate.width)
                   .map(x => {
                     return (
-                      <Tile
+                      <BattleTile
                         unit={gamestate.units.get(gamestate.coordinateAt(x, y))}
                       />
                     );

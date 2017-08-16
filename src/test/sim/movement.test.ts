@@ -1,4 +1,4 @@
-import {Tile} from '../../sim/map/map';
+//import {Tile} from '../../sim/map/map';
 import * as Unit from '../../sim/unit/unit';
 import {TEST_MAP} from '../../sim/data/maps';
 import * as Jobs from '../../sim/data/jobs';

@@ -1,11 +1,10 @@
 import {Job, AbilitySet} from '../job/job';
-import {AbilitySet} from '../ability/ability';
 import {Equipment} from '../item/equipment';
 import * as Wieldable from '../item/wieldable';
 import * as Headgear from '../item/headgear';
 import * as BodyArmor from '../item/bodyarmor';
 import * as Accessory from '../item/accessory';
-import {Integer} from '../math/integer';
+//import {Integer} from '../math/integer';
 
 
 // constructor(abilitySet: AbilitySet,
