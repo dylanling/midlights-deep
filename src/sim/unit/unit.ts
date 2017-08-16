@@ -1,4 +1,4 @@
-import {Job} from '../job/job';
+import {Job, AbilitySet} from '../job/job';
 import {Wieldable, Weapon, FISTS, isWeapon} from '../item/wieldable';
 import {Headgear} from '../item/headgear';
 import {BodyArmor} from '../item/bodyarmor';
@@ -82,7 +82,59 @@ export class Stats {
   readonly pAttack: Integer;
   readonly mAttack: Integer;
 
-  // TODO: constructor
+  constructor(level: Integer,
+              brave: Integer,
+              faith: Integer,
+              speed: Integer,
+              move: Integer,
+              jump: Integer,
+              maxHp: Integer,
+              maxMp: Integer,
+              currentHp: Integer,
+              currentMp: Integer,
+              pAttack: Integer,
+              mAttack: Integer) {
+    this.level = level;
+    this.brave = brave;
+    this.faith = faith;
+    this.speed = speed;
+    this.move = move;
+    this.jump = jump;
+    this.maxHp = maxHp;
+    this.maxMp = maxMp;
+    this.currentHp = currentHp;
+    this.currentMp = currentMp;
+    this.pAttack = pAttack;
+    this.mAttack = mAttack;
+  }
+
+  static from(level: number,
+              brave: number,
+              faith: number,
+              speed: number,
+              move: number,
+              jump: number,
+              maxHp: number,
+              maxMp: number,
+              currentHp: number,
+              currentMp: number,
+              pAttack: number,
+              mAttack: number): Stats {
+    return new Stats(
+      Integer.from(level),
+      Integer.from(brave),
+      Integer.from(faith),
+      Integer.from(speed),
+      Integer.from(move),
+      Integer.from(jump),
+      Integer.from(maxHp),
+      Integer.from(maxMp),
+      Integer.from(currentHp),
+      Integer.from(currentMp),
+      Integer.from(pAttack),
+      Integer.from(mAttack)
+    );
+  }
 }
 
 export class UnitEquipment {
@@ -115,13 +167,13 @@ export class UnitEquipment {
 
 export class UnitAbilities {
   readonly job: Job;
-  readonly secondarySet?: Abilities.AbilitySet;
+  readonly secondarySet?: AbilitySet;
   readonly reaction?: Abilities.ReactionAbility;
   readonly support?: Abilities.SupportAbility;
   readonly movement?: Abilities.MovementAbility;
 
   constructor(job: Job, 
-              actions?: Abilities.AbilitySet, 
+              actions?: AbilitySet, 
               reaction?: Abilities.ReactionAbility, 
               support?: Abilities.SupportAbility, 
               movement?: Abilities.MovementAbility) {
@@ -132,7 +184,7 @@ export class UnitAbilities {
     this.movement = movement;
   }
 
-  get primarySet(): Abilities.AbilitySet {
+  get primarySet(): AbilitySet {
     return this.job.abilitySet;
   }
 
@@ -144,7 +196,7 @@ export class UnitAbilities {
   withJob(job: Job): UnitAbilities {
     return new UnitAbilities(job, this.secondarySet, this.reaction, this.support, this.movement);
   }
-  withActions(secondarySet: Abilities.AbilitySet): UnitAbilities {
+  withActions(secondarySet: AbilitySet): UnitAbilities {
     return new UnitAbilities(this.job, secondarySet, this.reaction, this.support, this.movement);
   }
   withReaction(reaction: Abilities.ReactionAbility): UnitAbilities {

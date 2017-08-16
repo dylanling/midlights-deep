@@ -2,7 +2,7 @@ import {GameState} from './battle/gamestate';
 import {BattleEvent} from './battle/event';
 import {EventQueue} from './battle/eventqueue';
 
-class Game {
+export class Game {
   // display gamestate
     // map with tiles
     // mapping of tiles and units

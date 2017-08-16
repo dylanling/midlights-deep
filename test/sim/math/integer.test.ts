@@ -4,7 +4,7 @@ it('adds numbers correctly', () => {
   const a = Integer.random(Integer.MIN, Integer.MAX);
   const b = Integer.random(Integer.MIN, Integer.MAX);
   const expected = a.value + b.value;
-  expect(a.plus(b).value.toEqual(expected);
+  expect(a.plus(b).value).toEqual(expected);
 });
 
 it('subtracts numbers correctly', () => {

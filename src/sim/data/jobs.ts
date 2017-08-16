@@ -2,6 +2,9 @@ import {Job, AbilitySet} from '../job/job';
 import {AbilitySet} from '../ability/ability';
 import {Equipment} from '../item/equipment';
 import * as Wieldable from '../item/wieldable';
+import * as Headgear from '../item/headgear';
+import * as BodyArmor from '../item/bodyarmor';
+import * as Accessory from '../item/accessory';
 import {Integer} from '../math/integer';
 
 
@@ -30,7 +33,14 @@ const ARTS_OF_WAR = new AbilitySet(
 );
 
 const canKnightEquip = (item: Equipment) =>
-  true;
+  item instanceof Wieldable.Sword ||
+    // item instanceof Wieldable.KnightSword ||
+    item instanceof Wieldable.Shield ||
+    item instanceof Headgear.Helm ||
+    item instanceof BodyArmor.Armor ||
+    item instanceof BodyArmor.Robe ||
+    item instanceof Accessory.Cloak ||
+    item instanceof Accessory.EffectAccessory;
 
 export const KNIGHT = new Job(
   ARTS_OF_WAR, 120, 80, 100, 120, 80, 3, 3, 10, canKnightEquip
