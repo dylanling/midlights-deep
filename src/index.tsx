@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Game from './Game';
+import Battle from './Game';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 ReactDOM.render(
-  <Game />,
+  <Battle />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

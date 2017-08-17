@@ -9,17 +9,22 @@ export class Game {
   // event queue
   readonly initial: GameState;
   readonly events: EventQueue;
-
   private _current: GameState;
+
+  constructor(initial: GameState) {
+    this.initial = initial;
+    this._current = initial;
+    this.events = new EventQueue(initial);
+  }
 
   get current(): GameState {
     return this._current;
   }
 
   // TODO: store history
-  update(event: BattleEvent): GameState {
+  update(event: BattleEvent): void {
     this.events.push(event);
-    return this.events.process();
+    this._current = this.events.process();
   }
 
   // TODO: process from snapshot
